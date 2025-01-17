@@ -1,0 +1,43 @@
+import 'package:flutter/cupertino.dart';
+
+enum ScreenMode {
+  mobile,
+  tablet,
+  desktop;
+
+  bool get isMobile => this == ScreenMode.mobile;
+
+  bool get isTablet => this == ScreenMode.tablet;
+
+  bool get isWeb => this == ScreenMode.desktop;
+
+  bool get isMobileOrTablet =>
+      this == ScreenMode.mobile || this == ScreenMode.tablet;
+
+  double get spacing => switch (this) {
+        ScreenMode.mobile => 10,
+        ScreenMode.tablet => 20,
+        ScreenMode.desktop => 20,
+      };
+}
+
+class ScreenModeWidget extends InheritedWidget {
+  final ScreenMode mode;
+
+  const ScreenModeWidget({super.key, required this.mode, required super.child});
+
+  static ScreenMode of(BuildContext context) {
+    final responsiveLayout =
+        context.dependOnInheritedWidgetOfExactType<ScreenModeWidget>();
+
+    if (responsiveLayout == null) {
+      throw FlutterError('ResponsiveLayout not found in widget tree!');
+    }
+    return responsiveLayout.mode;
+  }
+
+  @override
+  bool updateShouldNotify(covariant ScreenModeWidget oldWidget) {
+    return oldWidget.mode != mode;
+  }
+}
