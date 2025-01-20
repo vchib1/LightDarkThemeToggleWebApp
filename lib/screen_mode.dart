@@ -14,10 +14,16 @@ enum ScreenMode {
   bool get isMobileOrTablet =>
       this == ScreenMode.mobile || this == ScreenMode.tablet;
 
-  double get spacing => switch (this) {
+  double get contentSpacing => switch (this) {
+        ScreenMode.mobile => 10,
+        ScreenMode.tablet => 30,
+        ScreenMode.desktop => 50,
+      };
+
+  double get mainHorizontalPadding => switch (this) {
         ScreenMode.mobile => 10,
         ScreenMode.tablet => 20,
-        ScreenMode.desktop => 20,
+        ScreenMode.desktop => 100,
       };
 }
 
