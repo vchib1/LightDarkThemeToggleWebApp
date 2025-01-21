@@ -10,7 +10,7 @@
     <!-- iOS meta tags & icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="light_dark_theme_toggle_web">
+    <meta name="apple-mobile-web-app-title" content="Light Dark Theme Toggle">
     <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
     <!-- Favicon -->
@@ -19,81 +19,97 @@
     <title>light_dark_theme_toggle_web</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
         }
 
-        #loading-container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        #loading-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
         }
 
         .loader {
-    width: 80px;
-    height: 40px;
-    border-radius: 100px 100px 0 0;
-    position: relative;
-    overflow: hidden;
-    }
-    .loader:before {
-    content: "";
-    position: absolute;
-    inset: 0 0 -100%;
-    background:
-    radial-gradient(farthest-side,#ffd738 80%,#0000) left 70% top    20%/15px 15px,
-    radial-gradient(farthest-side,#020308 92%,#0000) left 65% bottom 19%/12px 12px,
-    radial-gradient(farthest-side,#ecfefe 92%,#0000) left 70% bottom 20%/15px 15px,
-    linear-gradient(#9eddfe 50%,#020308 0);
-    background-repeat: no-repeat;
-    animation: l5 2s infinite;
-    }
-    @keyframes l5 {
-    0%,20%   {transform: rotate(0)}
-    40%,60%  {transform: rotate(.5turn)}
-    80%,100% {transform: rotate(1turn)}
-    }
+          width: 80px;
+          height: 40px;
+          border-radius: 100px 100px 0 0;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .loader:before {
+          content: "";
+          position: absolute;
+          inset: 0 0 -100%;
+          background:
+            radial-gradient(farthest-side, #ffd738 80%, #0000) left 70% top 20%/15px 15px,
+            radial-gradient(farthest-side, #020308 92%, #0000) left 65% bottom 19%/12px 12px,
+            radial-gradient(farthest-side, #ecfefe 92%, #0000) left 70% bottom 20%/15px 15px,
+            linear-gradient(#9eddfe 50%, #020308 0);
+          background-repeat: no-repeat;
+          animation: l5 2s infinite;
+        }
+
+        @keyframes l5 {
+
+          0%,
+          20% {
+            transform: rotate(0)
+          }
+
+          40%,
+          60% {
+            transform: rotate(.5turn)
+          }
+
+          80%,
+          100% {
+            transform: rotate(1turn)
+          }
+        }
     </style>
 </head>
+
 <body>
 <div id="loading-container">
     <div class="loader"></div>
 </div>
 <script>
     function delay(time) {
-            return new Promise(resolve => setTimeout(resolve, time));
-     }
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
     const darkThemeMode = localStorage.getItem('flutter.darkMode') || false;
 
     if (darkThemeMode === 'true') {
-        document.body.style.backgroundColor = '#141218';
+      document.body.style.backgroundColor = '#141218';
     } else {
-        document.body.style.backgroundColor = '#F7FBF1';
+      document.body.style.backgroundColor = '#F7FBF1';
     }
 
-     window.addEventListener('load', function(ev) {
-       {{flutter_js}}
-       {{flutter_build_config}}
+    window.addEventListener('load', function (ev) {
+      { { flutter_js } }
+      { { flutter_build_config } }
 
-       const loading = document.querySelector(".loader");
+      const loading = document.querySelector(".loader");
 
-       _flutter.loader.load({
-         serviceWorker: {
-           serviceWorkerVersion: {{flutter_service_worker_version}},
+      _flutter.loader.load({
+        serviceWorker: {
+          serviceWorkerVersion: {{ flutter_service_worker_version }},
          },
-         onEntrypointLoaded: async function(engineInitializer) {
-           engineInitializer.initializeEngine().then(async function(appRunner) {
-             loading.style.opacity = "0";
-             await delay(400);
-             loading.remove();
-             await appRunner.runApp();
-           });
-         }
+      onEntrypointLoaded: async function (engineInitializer) {
+        engineInitializer.initializeEngine().then(async function (appRunner) {
+          loading.style.opacity = "0";
+          await delay(400);
+          loading.remove();
+          await appRunner.runApp();
+        });
+      }
        });
      });
 </script>
 </body>
+
 </html>
