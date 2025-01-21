@@ -38,6 +38,7 @@
           border-radius: 100px 100px 0 0;
           position: relative;
           overflow: hidden;
+          transition: opacity .4s ease-out;
         }
 
         .loader:before {
@@ -105,10 +106,11 @@ _flutter.buildConfig = {"engineRevision":"e672b006cb34c921db85b8e2f482ed3144a457
 
       _flutter.loader.load({
         serviceWorker: {
-          serviceWorkerVersion: "2804096496"
+          serviceWorkerVersion: "3977441355"
          },
       onEntrypointLoaded: async function (engineInitializer) {
         engineInitializer.initializeEngine().then(async function (appRunner) {
+          //await delay(400);
           loading.style.opacity = "0";
           await delay(400);
           loading.remove();
