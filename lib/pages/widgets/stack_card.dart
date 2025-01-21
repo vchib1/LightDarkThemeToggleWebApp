@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:light_dark_theme_toggle/light_dark_theme_toggle.dart';
 import 'package:light_dark_theme_toggle_web/model/icon_model.dart';
@@ -20,7 +22,7 @@ class _StackCardState extends State<StackCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 
@@ -29,7 +31,12 @@ class _StackCardState extends State<StackCard>
       curve: Curves.linear,
     );
 
-    _controller.forward();
+    Timer(
+      const Duration(milliseconds: 300),
+      () {
+        _controller.forward();
+      },
+    );
   }
 
   @override
@@ -55,52 +62,56 @@ class _StackCardState extends State<StackCard>
       ScreenMode.desktop => 0.20,
     };
 
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        return Stack(
-          children: [
-            ...IconModel.colors.mapIndexed(
-              (index, color) {
-                return Transform.rotate(
-                  angle: (IconModel.colors.length - 1 - index) *
-                      rotation *
-                      _animation.value,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: color,
-                      borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).shadowColor,
-                          blurRadius: 0.5,
-                        )
-                      ],
+    return SizedBox(
+      height: size,
+      width: size,
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, child) {
+          return Stack(
+            children: [
+              ...IconModel.colors.mapIndexed(
+                (index, color) {
+                  return Transform.rotate(
+                    angle: (IconModel.colors.length - 1 - index) *
+                        rotation *
+                        _animation.value,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: color,
+                        borderRadius: BorderRadius.circular(16.0),
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: Theme.of(context).shadowColor,
+                        //     blurRadius: 0.5,
+                        //   )
+                        // ],
+                      ),
+                      height: size,
+                      width: size,
+                      child: HoverEffect(
+                        duration: duration,
+                        reverseDuration: duration,
+                        builder: (context, controller, child) {
+                          return AbsorbPointer(
+                            child: LightDarkThemeToggle(
+                              color: Colors.black,
+                              themeIconType: ThemeIconType.innerMoon,
+                              size: size * 0.50,
+                              value: controller.value == 0 ? false : true,
+                              onChanged: (value) {},
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    height: size,
-                    width: size,
-                    child: HoverEffect(
-                      duration: duration,
-                      reverseDuration: duration,
-                      builder: (context, controller, child) {
-                        return AbsorbPointer(
-                          child: LightDarkThemeToggle(
-                            color: Colors.black,
-                            themeIconType: ThemeIconType.innerMoon,
-                            size: size * 0.50,
-                            value: controller.value == 0 ? false : true,
-                            onChanged: (value) {},
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-            )
-          ],
-        );
-      },
+                  );
+                },
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -35,9 +35,8 @@ class Footer extends StatelessWidget {
     );
 
     return Container(
-      height: footerHeight,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(12.0),
       width: double.infinity,
       child: switch (screenMode) {
         ScreenMode.mobile => Column(
@@ -47,7 +46,7 @@ class Footer extends StatelessWidget {
             children: [
               left,
               right,
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
             ],
           ),
         ScreenMode.tablet || ScreenMode.desktop => Row(
