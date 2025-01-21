@@ -29,7 +29,7 @@ jobs:
         run: flutter pub get
 
       - name: Creating a build
-        run: flutter build web --wasm --release --base-href "/light-dark-theme-toggle/"
+        run: flutter build web --wasm --release --base-href "/LightDarkThemeToggleWebApp/"
 
       - name: Deploying to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
