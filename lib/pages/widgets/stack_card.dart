@@ -15,8 +15,14 @@ class StackCard extends StatelessWidget {
 
     final size = switch (screenMode) {
       ScreenMode.mobile => 150.0,
-      ScreenMode.tablet => 200.0,
+      ScreenMode.tablet => 175.0,
       ScreenMode.desktop => 250.0,
+    };
+
+    final rotation = switch (screenMode) {
+      ScreenMode.mobile => 0.25,
+      ScreenMode.tablet => 0.20,
+      ScreenMode.desktop => 0.20,
     };
 
     return Stack(
@@ -24,7 +30,7 @@ class StackCard extends StatelessWidget {
         ...IconModel.colors.mapIndexed(
           (index, color) {
             return Transform.rotate(
-              angle: (IconModel.colors.length - 1 - index) * 0.20,
+              angle: (IconModel.colors.length - 1 - index) * rotation,
               child: Container(
                 decoration: BoxDecoration(
                   color: color,
@@ -44,7 +50,7 @@ class StackCard extends StatelessWidget {
                       child: LightDarkThemeToggle(
                         color: Colors.black,
                         themeIconType: ThemeIconType.innerMoon,
-                        size: size * 0.6,
+                        size: size * 0.50,
                         value: controller.value == 0 ? false : true,
                         onChanged: (value) {},
                       ),

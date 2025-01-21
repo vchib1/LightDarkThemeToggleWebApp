@@ -21,7 +21,7 @@ enum ScreenMode {
       };
 
   double get mainHorizontalPadding => switch (this) {
-        ScreenMode.mobile => 10,
+        ScreenMode.mobile => 8,
         ScreenMode.tablet => 20,
         ScreenMode.desktop => 100,
       };

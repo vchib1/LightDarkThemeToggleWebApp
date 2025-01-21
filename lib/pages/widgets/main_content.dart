@@ -3,6 +3,8 @@ import 'package:light_dark_theme_toggle_web/model/icon_model.dart';
 import 'package:light_dark_theme_toggle_web/pages/widgets/footer.dart';
 import 'package:light_dark_theme_toggle_web/screen_mode.dart';
 import 'package:light_dark_theme_toggle_web/utils/constants.dart';
+import 'package:light_dark_theme_toggle_web/utils/launch_url.dart';
+import 'package:universal_code_viewer/universal_code_viewer.dart';
 import 'custom_button.dart';
 import 'icon_card.dart';
 import 'responsive_layout.dart';
@@ -19,7 +21,7 @@ class MainContent extends StatelessWidget {
 
     final titleStyle = textTheme.titleMedium!.copyWith(
       fontWeight: FontWeight.bold,
-      fontSize: screenMode.isMobileOrTablet ? 26 : 46,
+      fontSize: screenMode.isMobileOrTablet ? 26 : 42,
     );
     final descriptionStyle = textTheme.bodyLarge!.copyWith(
       color: Colors.grey,
@@ -38,6 +40,9 @@ class MainContent extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Hero Section
+              if (screenMode.isMobileOrTablet)
+                const SizedBox(height: headerHeight),
               Container(
                 alignment: Alignment.center,
                 child: ResponsiveLayout(
@@ -51,7 +56,8 @@ class MainContent extends StatelessWidget {
                     Flexible(
                       flex: 2,
                       child: Container(
-                        height: constraints.maxHeight,
+                        height:
+                            screenMode.isMobile ? null : constraints.maxHeight,
                         padding: const EdgeInsets.all(32),
                         alignment: Alignment.center,
                         child: Column(
@@ -59,7 +65,7 @@ class MainContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Toggle Theme in Flutter\nwith Animated Icons",
+                              "Toggle Theme in Flutter with Animated Icons",
                               style: titleStyle,
                             ),
                             const SizedBox(height: 5),
@@ -69,19 +75,40 @@ class MainContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 30),
                             Wrap(
+                              spacing: 10,
+                              runSpacing: 10,
                               children: [
-                                CustomButton(text: "Get on pub.dev"),
-                                CustomButton(text: "View on github"),
+                                CustomButton(
+                                  text: "Get started",
+                                  onPressed: () => openLink(
+                                      "https://pub.dev/packages/light_dark_theme_toggle"),
+                                ),
+                                CustomButton(
+                                  text: "View on github",
+                                  svgIcon: "github-icon",
+                                  onPressed: () => openLink(
+                                      "https://github.com/vchib1/LightDarkThemeToggle"),
+                                ),
                               ],
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Flexible(flex: 1, child: const StackCard())
+                    Flexible(
+                      flex: 1,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: screenMode.isMobile ? 0 : 30,
+                        ),
+                        child: const StackCard(),
+                      ),
+                    )
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
+              // Explore Section
               Container(
                 constraints: BoxConstraints(maxWidth: 1200),
                 alignment: Alignment.topCenter,
@@ -112,9 +139,52 @@ class MainContent extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: footerHeight),
+
+              const SizedBox(height: 100),
+
+              // Code Snippet
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenMode.mainHorizontalPadding,
+                ),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Code Snippet",
+                      style: textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    UniversalCodeViewer(
+                      showLineNumbers: false,
+                      codeLanguage: 'dart',
+                      code: '''
+LightDarkThemeToggle(
+    value: false, // Initial value (false for dark, true for light)
+    onChanged: (bool value) {
+      // Handle theme change here.
+    },
+    size: 48.0,
+    themeIconType: ThemeIconType.expand,
+    color: Colors.black,
+    duration: Duration(milliseconds: 500),
+    curve: Curves.easeInOut,
+  ),
+),
+''',
+                      style: Theme.of(context).brightness == Brightness.light
+                          ? SyntaxHighlighterStyles.vscodeLight
+                          : SyntaxHighlighterStyles.vscodeDark,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 50),
               Footer(),
-              const SizedBox(height: footerHeight / 4),
             ],
           ),
         ),

@@ -12,7 +12,7 @@ class BackgroundWidget extends StatelessWidget {
     required this.child,
     this.dotSize = 2.0,
     this.dotColor,
-    this.spacing = 25.0,
+    this.spacing = 30.0,
   });
 
   @override
@@ -22,7 +22,7 @@ class BackgroundWidget extends StatelessWidget {
       painter: DotsGridPainter(
         dotSize: dotSize,
         dotColor: dotColor ??
-            Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.1),
+            Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.125),
         spacing: spacing,
       ),
       child: Container(
@@ -60,9 +60,9 @@ class DotsGridPainter extends CustomPainter {
       ..color = dotColor
       ..style = PaintingStyle.fill;
 
-    for (double y = 0; y < size.height; y += spacing) {
-      for (double x = 0; x < size.width; x += spacing) {
-        canvas.drawCircle(Offset(x, y), dotSize / 2, paint);
+    for (double x = 0; x < size.width; x += spacing) {
+      for (double y = 0; y < size.height; y += spacing) {
+        canvas.drawCircle(Offset(x - spacing, y), dotSize / 2, paint);
       }
     }
   }
