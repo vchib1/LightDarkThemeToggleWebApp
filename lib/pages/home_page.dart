@@ -24,12 +24,9 @@ class _HomePageState extends State<HomePage> {
             scrollPosIsAtTop = notification.metrics.pixels == 0 &&
                 notification.metrics.axis == Axis.vertical;
           });
-
           return true;
         },
-        child: BackgroundWidget(
-          child: MainContent(),
-        ),
+        child: BackgroundWidget(child: MainContent()),
       ),
     );
   }

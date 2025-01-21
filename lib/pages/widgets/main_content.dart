@@ -21,7 +21,7 @@ class MainContent extends StatelessWidget {
 
     final titleStyle = textTheme.titleMedium!.copyWith(
       fontWeight: FontWeight.bold,
-      fontSize: screenMode.isMobileOrTablet ? 26 : 42,
+      fontSize: screenMode.isMobileOrTablet ? 32 : 46,
     );
     final descriptionStyle = textTheme.bodyLarge!.copyWith(
       color: Colors.grey,
@@ -62,7 +62,10 @@ class MainContent extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: screenMode.isMobileOrTablet
+                              ? CrossAxisAlignment.center
+                              : CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Toggle Theme in Flutter with Animated Icons",

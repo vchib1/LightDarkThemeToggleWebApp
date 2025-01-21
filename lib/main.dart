@@ -14,16 +14,37 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AppThemeProvider(pref: pref),
-        )
+            create: (context) => AppThemeProvider(pref: pref))
       ],
       child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   ScreenMode getLayoutType(double width) {
     if (width < 480) {
@@ -54,7 +75,10 @@ class MyApp extends StatelessWidget {
             builder: (context, constraints) {
               return ScreenModeWidget(
                 mode: getLayoutType(constraints.maxWidth),
-                child: HomePage(),
+                child: FadeTransition(
+                  opacity: Tween(begin: 0.0, end: 1.0).animate(_controller),
+                  child: HomePage(),
+                ),
               );
             },
           ),
