@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:light_dark_theme_toggle/light_dark_theme_toggle.dart';
 import 'package:light_dark_theme_toggle_web/pages/providers/theme_provider.dart';
 import 'package:light_dark_theme_toggle_web/pages/widgets/custom_button.dart';
@@ -15,7 +16,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final screenMode = ScreenModeWidget.of(context);
 
-    return Container(
+    return AnimatedContainer(
+      duration: 300.milliseconds,
       padding:
           EdgeInsets.symmetric(horizontal: screenMode.mainHorizontalPadding),
       decoration: BoxDecoration(

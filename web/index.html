@@ -38,6 +38,7 @@
           border-radius: 100px 100px 0 0;
           position: relative;
           overflow: hidden;
+          transition: opacity .4s ease-out;
         }
 
         .loader:before {
@@ -101,6 +102,7 @@
          },
       onEntrypointLoaded: async function (engineInitializer) {
         engineInitializer.initializeEngine().then(async function (appRunner) {
+          //await delay(400);
           loading.style.opacity = "0";
           await delay(400);
           loading.remove();

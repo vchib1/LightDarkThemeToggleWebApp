@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:light_dark_theme_toggle/light_dark_theme_toggle.dart';
 import 'package:light_dark_theme_toggle_web/model/icon_model.dart';
 import 'package:light_dark_theme_toggle_web/pages/widgets/hover_effect.dart';
@@ -80,12 +81,12 @@ class _StackCardState extends State<StackCard>
                       decoration: BoxDecoration(
                         color: color,
                         borderRadius: BorderRadius.circular(16.0),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Theme.of(context).shadowColor,
-                        //     blurRadius: 0.5,
-                        //   )
-                        // ],
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).shadowColor,
+                            blurRadius: 0.5,
+                          )
+                        ],
                       ),
                       height: size,
                       width: size,
@@ -100,7 +101,7 @@ class _StackCardState extends State<StackCard>
                               size: size * 0.50,
                               value: controller.value == 0 ? false : true,
                               onChanged: (value) {},
-                            ),
+                            ).animate().fadeIn(delay: 300.ms, duration: 300.ms),
                           );
                         },
                       ),

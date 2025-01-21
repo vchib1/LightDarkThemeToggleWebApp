@@ -35,6 +35,7 @@ class Footer extends StatelessWidget {
     );
 
     return Container(
+      constraints: BoxConstraints(minHeight: footerHeight),
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.all(12.0),
       width: double.infinity,
