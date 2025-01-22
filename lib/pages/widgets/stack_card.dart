@@ -23,7 +23,7 @@ class _StackCardState extends State<StackCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 
@@ -32,12 +32,9 @@ class _StackCardState extends State<StackCard>
       curve: Curves.linear,
     );
 
-    Timer(
-      const Duration(milliseconds: 500),
-      () {
-        _controller.forward();
-      },
-    );
+    Timer(const Duration(milliseconds: 200), () {
+      _controller.forward();
+    });
   }
 
   @override
@@ -62,13 +59,13 @@ class _StackCardState extends State<StackCard>
     return SizedBox(
       height: size,
       width: size,
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Stack(
-            children: [
-              ...IconModel.colors.mapIndexed(
-                (index, color) {
+      child: Stack(
+        children: [
+          ...IconModel.colors.mapIndexed(
+            (index, color) {
+              return AnimatedBuilder(
+                animation: _animation,
+                builder: (context, child) {
                   return Transform.rotate(
                     angle: (IconModel.colors.length - 1 - index) *
                         rotation *
@@ -86,28 +83,33 @@ class _StackCardState extends State<StackCard>
                       ),
                       height: size,
                       width: size,
-                      child: HoverEffect(
-                        duration: duration,
-                        reverseDuration: duration,
-                        builder: (context, controller, child) {
-                          return AbsorbPointer(
-                            child: LightDarkThemeToggle(
-                              color: Colors.black,
-                              themeIconType: ThemeIconType.innerMoon,
-                              size: size * 0.50,
-                              value: controller.value == 0 ? false : true,
-                              onChanged: (value) {},
-                            ).animate().fadeIn(delay: 300.ms, duration: 300.ms),
-                          );
-                        },
-                      ),
+                      child: index != IconModel.colors.length - 1
+                          ? null
+                          : HoverEffect(
+                              duration: duration,
+                              reverseDuration: duration,
+                              builder: (context, controller, child) {
+                                return AbsorbPointer(
+                                  child: LightDarkThemeToggle(
+                                    color: Colors.black,
+                                    themeIconType: ThemeIconType.innerMoon,
+                                    size: size * 0.50,
+                                    value: controller.value == 0 ? false : true,
+                                    onChanged: (value) {},
+                                  ).animate().fadeIn(
+                                        delay: 300.ms,
+                                        duration: 300.ms,
+                                      ),
+                                );
+                              },
+                            ),
                     ),
                   );
                 },
-              )
-            ],
-          );
-        },
+              );
+            },
+          )
+        ],
       ),
     );
   }
