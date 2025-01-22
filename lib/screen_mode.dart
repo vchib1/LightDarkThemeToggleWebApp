@@ -37,7 +37,7 @@ class ScreenModeWidget extends InheritedWidget {
         context.dependOnInheritedWidgetOfExactType<ScreenModeWidget>();
 
     if (responsiveLayout == null) {
-      throw FlutterError('ResponsiveLayout not found in widget tree!');
+      throw FlutterError('ScreenModeWidget not found in widget tree!');
     }
     return responsiveLayout.mode;
   }

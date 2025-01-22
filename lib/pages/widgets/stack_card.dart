@@ -23,7 +23,7 @@ class _StackCardState extends State<StackCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
 
@@ -33,7 +33,7 @@ class _StackCardState extends State<StackCard>
     );
 
     Timer(
-      const Duration(milliseconds: 300),
+      const Duration(milliseconds: 500),
       () {
         _controller.forward();
       },
@@ -57,11 +57,7 @@ class _StackCardState extends State<StackCard>
       ScreenMode.desktop => 250.0,
     };
 
-    final rotation = switch (screenMode) {
-      ScreenMode.mobile => 0.25,
-      ScreenMode.tablet => 0.20,
-      ScreenMode.desktop => 0.20,
-    };
+    final rotation = 0.2;
 
     return SizedBox(
       height: size,

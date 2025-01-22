@@ -17,7 +17,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     final screenMode = ScreenModeWidget.of(context);
 
     return AnimatedContainer(
-      duration: 300.milliseconds,
+      duration: 200.milliseconds,
       padding:
           EdgeInsets.symmetric(horizontal: screenMode.mainHorizontalPadding),
       decoration: BoxDecoration(
