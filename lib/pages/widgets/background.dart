@@ -60,15 +60,16 @@ class DotsGridPainter extends CustomPainter {
       ..color = dotColor
       ..style = PaintingStyle.fill;
 
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x - spacing, y), dotSize / 2, paint);
+    final rows = (size.height / spacing).ceil();
+    final columns = (size.width / spacing).ceil();
+
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < columns; j++) {
+        canvas.drawCircle(Offset(j * spacing, i * spacing), dotSize / 2, paint);
       }
     }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
-  }
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -5,15 +5,26 @@ import 'package:light_dark_theme_toggle_web/pages/widgets/hover_effect.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final String? svgIcon;
+  final Color? backgroundColor;
+  final Color? hoverColor;
+  final Color? textColor;
   final void Function()? onPressed;
 
-  const CustomButton(
-      {super.key, required this.text, this.svgIcon, this.onPressed});
+  const CustomButton({
+    super.key,
+    required this.text,
+    this.svgIcon,
+    this.onPressed,
+    this.backgroundColor,
+    this.hoverColor,
+    this.textColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = Theme.of(context).colorScheme.surfaceContainerHigh;
-    final hoverColor = Theme.of(context).colorScheme.surface;
+    final backgroundColor = this.backgroundColor ??
+        Theme.of(context).colorScheme.surfaceContainerHigh;
+    final hoverColor = this.hoverColor ?? Theme.of(context).colorScheme.surface;
 
     return HoverEffect(
       duration: const Duration(milliseconds: 150),
@@ -26,10 +37,10 @@ class CustomButton extends StatelessWidget {
             height: 50,
             width: 200,
             alignment: Alignment.center,
-            duration: const Duration(milliseconds: 150),
+            duration: const Duration(milliseconds: 100),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: controller.value == 0 ? hoverColor : backgroundColor,
+              color: controller.value == 0 ? backgroundColor : hoverColor,
               border: Border.all(
                 color: Theme.of(context)
                     .colorScheme
@@ -52,7 +63,12 @@ class CustomButton extends StatelessWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                Text(text, style: Theme.of(context).textTheme.bodyLarge),
+                Text(
+                  text,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: textColor,
+                      ),
+                ),
               ],
             ),
           ),

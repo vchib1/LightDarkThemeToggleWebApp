@@ -23,24 +23,23 @@ class ResponsiveLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenMode = ScreenModeWidget.of(context);
 
-    final reverse = screenMode.isMobile;
-
-    final contentChildren = reverse ? children.reversed.toList() : children;
-
     Widget layout = switch (screenMode) {
       ScreenMode.mobile => Column(
           spacing: spacing,
           mainAxisSize: mainAxisSize,
           crossAxisAlignment: crossAxisAlignment,
           mainAxisAlignment: mainAxisAlignment,
-          children: contentChildren,
+          children: [
+            ...children,
+            const SizedBox(height: 30),
+          ],
         ),
       ScreenMode.tablet || ScreenMode.desktop => Row(
           spacing: spacing,
           mainAxisSize: mainAxisSize,
           crossAxisAlignment: crossAxisAlignment,
           mainAxisAlignment: mainAxisAlignment,
-          children: contentChildren,
+          children: children,
         ),
     };
 

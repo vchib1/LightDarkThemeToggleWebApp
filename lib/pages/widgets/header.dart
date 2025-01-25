@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:light_dark_theme_toggle/light_dark_theme_toggle.dart';
 import 'package:light_dark_theme_toggle_web/pages/providers/theme_provider.dart';
-import 'package:light_dark_theme_toggle_web/pages/widgets/custom_button.dart';
 import 'package:light_dark_theme_toggle_web/screen_mode.dart';
 import 'package:light_dark_theme_toggle_web/utils/constants.dart';
 import 'package:provider/provider.dart';

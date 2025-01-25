@@ -49,7 +49,7 @@ class _StackCardState extends State<StackCard>
     final screenMode = ScreenModeWidget.of(context);
 
     final size = switch (screenMode) {
-      ScreenMode.mobile => 150.0,
+      ScreenMode.mobile => 175.0,
       ScreenMode.tablet => 175.0,
       ScreenMode.desktop => 250.0,
     };

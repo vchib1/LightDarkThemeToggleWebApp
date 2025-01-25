@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:light_dark_theme_toggle_web/pages/home_page.dart';
 import 'package:light_dark_theme_toggle_web/pages/providers/theme_provider.dart';
 import 'package:light_dark_theme_toggle_web/screen_mode.dart';
@@ -11,9 +10,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final pref = await SharedPreferences.getInstance();
-
-  var loader = SvgAssetLoader("assets/svg/github-icon.svg");
-  svg.cache.putIfAbsent(loader.cacheKey(null), () => loader.loadBytes(null));
 
   runApp(
     MultiProvider(
