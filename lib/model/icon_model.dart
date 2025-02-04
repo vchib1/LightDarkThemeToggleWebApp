@@ -11,8 +11,10 @@ class IconModel {
   final String description;
   final Color backgroundColor;
   final int index;
+  final Curve curve;
 
-  IconModel(this.iconType, this.description, this.index, this.backgroundColor);
+  IconModel(this.iconType, this.description, this.index, this.backgroundColor,
+      this.curve);
 
   static List<String> descriptions = [
     "Classic sun and moon, representing day and night.",
@@ -36,10 +38,21 @@ class IconModel {
     Color(0xFF98FB98), // Pale Green
   ];
 
+  static List<Curve> curves = [
+    Curves.easeOutBack,
+    Curves.easeOutBack,
+    Curves.easeOutBack,
+    Curves.ease,
+    Curves.easeInOut,
+    Curves.easeOutBack,
+    Curves.easeOutBack,
+    Curves.ease,
+  ];
+
   static List<IconModel> getIcons() {
     return ThemeIconType.values
-        .mapIndexed((index, icon) =>
-            IconModel(icon, descriptions[index], index, colors[index]))
+        .mapIndexed((index, icon) => IconModel(
+            icon, descriptions[index], index, colors[index], curves[index]))
         .toList();
   }
 }

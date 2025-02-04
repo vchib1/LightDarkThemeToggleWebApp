@@ -65,6 +65,8 @@ class _IconCardState extends State<IconCard> {
                         child: LightDarkThemeToggle(
                           size: 150,
                           color: Colors.black,
+                          curve: widget.iconModel.curve,
+                          reverseCurve: widget.iconModel.curve,
                           themeIconType: widget.iconModel.iconType,
                           value: themeBool,
                           onChanged: (_) {
