@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  light_dark_theme_toggle: ^1.0.1
+  light_dark_theme_toggle: ^1.1.2
   shared_preferences: ^2.3.5
   provider: ^6.1.2
   flutter_svg: ^2.0.17
@@ -32,5 +32,5 @@ flutter:
   uses-material-design: true
 
   assets:
-     - assets/
+    - assets/
 
