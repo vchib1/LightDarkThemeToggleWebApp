@@ -15,11 +15,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   light_dark_theme_toggle: ^1.1.2
   shared_preferences: ^2.3.5
-  provider: ^6.1.2
-  flutter_svg: ^2.0.17
-  url_launcher: ^6.3.1
-  flutter_animate: ^4.5.2
-  flutter_highlight: ^0.7.0
 
 dev_dependencies:
   flutter_test:

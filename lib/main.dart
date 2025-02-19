@@ -1,67 +1,86 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:light_dark_theme_toggle_web/pages/home_page.dart';
-import 'package:light_dark_theme_toggle_web/pages/providers/theme_provider.dart';
-import 'package:light_dark_theme_toggle_web/screen_mode.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'multi_view_app.dart';
+import 'package:light_dark_theme_toggle/light_dark_theme_toggle.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final pref = await SharedPreferences.getInstance();
+  SharedPreferences pref = await SharedPreferences.getInstance();
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-            create: (context) => AppThemeProvider(pref: pref))
-      ],
-      child: const MyApp(),
+  runWidget(
+    MultiViewApp(
+      viewBuilder: (context) {
+        return HomePage(pref);
+      },
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomePage extends StatefulWidget {
+  final SharedPreferences pref;
 
-  ScreenMode getLayoutType(double width) {
-    if (width < 480) {
-      return ScreenMode.mobile;
-    } else if (width < 850) {
-      return ScreenMode.tablet;
-    } else {
-      return ScreenMode.desktop;
-    }
+  const HomePage(this.pref, {super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // for only the widget
+  bool value = false;
+
+  // for theme change
+  bool darkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getDarkMode();
+  }
+
+  void getDarkMode() async {
+    darkMode = widget.pref.getBool('darkMode') ?? false;
+    setState(() {});
+  }
+
+  void toggleThemeMode() {
+    setState(() => darkMode = !darkMode);
+    widget.pref.setBool('darkMode', !darkMode);
+  }
+
+  void onChanged(bool value) {
+    setState(() {
+      this.value = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppThemeProvider>(
-      builder: (context, provider, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'LightDarkThemeToggle',
-          themeMode: provider.themeMode,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF98FB98)),
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData.dark(
-            useMaterial3: true,
-          ),
-          home: LayoutBuilder(
-            builder: (context, constraints) {
-              return ScreenModeWidget(
-                mode: getLayoutType(constraints.maxWidth),
-                child: HomePage()
-                    .animate()
-                    .fadeIn(duration: 400.milliseconds, curve: Curves.easeIn),
-              );
-            },
-          ),
-        );
-      },
+    int viewId = View.of(context).viewId;
+    int iconTypeIndex = (viewId - 3).clamp(0, ThemeIconType.values.length - 1);
+
+    final width = MediaQuery.sizeOf(context).width * .90;
+
+    final widgetWidth = clampDouble(width, 20, 200);
+
+    final isHeaderIcon = (viewId == 1);
+
+    return MaterialApp(
+      theme: darkMode ? ThemeData.dark() : ThemeData.light(),
+      debugShowCheckedModeBanner: false,
+      home: Center(
+        child: LightDarkThemeToggle(
+          color: isHeaderIcon ? null : Colors.black,
+          size: isHeaderIcon ? null : widgetWidth,
+          themeIconType: viewId == 1 || viewId == 2
+              ? ThemeIconType.expand
+              : ThemeIconType.values[iconTypeIndex],
+          value: isHeaderIcon ? darkMode : value,
+          onChanged: isHeaderIcon ? (_) => toggleThemeMode() : onChanged,
+        ),
+      ),
     );
   }
 }
