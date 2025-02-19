@@ -13,7 +13,7 @@
     --surface-variant: #282828;
     --text-color: #ffffff;
     --text-color-variant: #d8d8d8;
- }
+}
 
 #loading{
     display: flex;
@@ -77,8 +77,13 @@
 
 /*Medium*/
 @media screen and (max-width: 768px) {
+
     :root {
         --section-padding: 1rem 1rem;
+    }
+
+    #header-trailing{
+        display: none;
     }
 }
 
@@ -86,6 +91,10 @@
 @media screen and (max-width: 640px) {
     :root {
         --section-padding: 1rem 1rem;
+    }
+
+    #header-trailing{
+        display: none;
     }
 
     .heading{
